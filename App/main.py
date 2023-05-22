@@ -3,7 +3,7 @@ import streamlit as st
 st.set_page_config(page_title="SEMPLI App", layout="wide")
 
 st.title("SEMPLI APP")
-st.write("Esta aplicación permite predecir si un cliente potencial de Semplí incorrirá en mora, para sí tomar la decisión de otorgarle un crédito o no.")
+st.write("Esta aplicación permite predecir si un cliente potencial de Semplí incorrirá en mora, para así tomar la decisión de otorgarle un crédito o no.")
 st.write("Puede realizar la predicción para uno o varios cliente potenciales cargando un archivo en formato CSV.")
 
 if 'images' not in st.session_state:

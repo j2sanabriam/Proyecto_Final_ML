@@ -1,6 +1,10 @@
 import pandas as pd
 import streamlit as st
 import requests
+import joblib
+
+# from sklearn.externals import joblib
+
 
 
 def read_file(flile):
@@ -8,20 +12,35 @@ def read_file(flile):
     return df
 
 
-@st.experimental_singleton()
+# @st.experimental_singleton()
+@st.cache_data
 def load_model():
-    # path = 'data/flower_classification.h5'
-    path = './models/sempli-v1.joblib'
+    path = './models/RandomForest.pkl'
     try:
-        # url = 'https://machine-learning-services.s3.amazonaws.com/flower_classification/flower_classification.h5'
-        url = 'https://github.com/j2sanabriam/Proyecto_Final_ML/blob/main/models/sempli-v1.joblib'
-        print("Downloading from S3")
+        url = 'https://github.com/j2sanabriam/Proyecto_Final_ML/blob/main/models/RandomForest.pkl'
+        print("Downloading from GitHub")
         r = requests.get(url)
 
         with open(path, 'wb') as file:
             file.write(r.content)
 
-        print("Downloaded from S3")
-        return keras.models.load_model(path)
+        print("Downloaded from GitHub")
+        return joblib.load(path)
     except:
-        return keras.models.load_model(path)
+        return joblib.load(path)
+
+@st.cache_data
+def load_pipeline():
+    path = './models/pipeline.pkl'
+    try:
+        url = 'https://github.com/j2sanabriam/Proyecto_Final_ML/blob/main/models/pipeline.pkl'
+        print("Downloading from GitHub")
+        r = requests.get(url)
+
+        with open(path, 'wb') as file:
+            file.write(r.content)
+
+        print("Downloaded from GitHub")
+        return joblib.load(path)
+    except:
+        return joblib.load(path)

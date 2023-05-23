@@ -5,7 +5,7 @@ from PIL import Image
 
 st.set_page_config(page_title="SEMPLI App", layout="wide")
 
-img = Image.open('./img/sempli.png')
+img = Image.open('img/sempli.png')
 st.image(img)
 # st.image("img/sempli.png")
 # st.title("Sempli App")

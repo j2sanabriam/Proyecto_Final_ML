@@ -22,13 +22,20 @@ def read_file(file):
 
 @st.cache_data
 def load_model():
+    pkl_url = 'https://github.com/j2sanabriam/Proyecto_Final_ML/blob/64ff64b0098be2349e4b6ea9a66e11fc923cdac3/App/models/SVM.pkl'
 
+    # Descargar el archivo .pkl utilizando requests
+    response = requests.get(pkl_url)
+    model_bytes = response.content
+    model = pickle.loads(model_bytes)
+    return model
+    """
     # path = 'https://github.com/j2sanabriam/Proyecto_Final_ML/blob/64ff64b0098be2349e4b6ea9a66e11fc923cdac3/App/models/SVM.pkl'
     path = 'models/SVM.pkl'
     with open(path, 'rb') as f:
         model = pickle.load(f)
     return model
-    """
+
     path = 'models/SVM.pkl'
 
     url = 'https://github.com/j2sanabriam/Proyecto_Final_ML/blob/64ff64b0098be2349e4b6ea9a66e11fc923cdac3/App/models/SVM.pkl'

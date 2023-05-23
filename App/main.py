@@ -4,8 +4,8 @@ import auxiliar as aux
 
 st.set_page_config(page_title="SEMPLI App", layout="wide")
 
-# st.image("./img/sempli.png")
-st.title("Sempli App")
+st.image("img/sempli.png")
+# st.title("Sempli App")
 st.write("Esta aplicación permite predecir si un cliente potencial de Sempli incorrirá en mora, para así apoyar la decisión de otorgarle un crédito o no. Puede realizar la predicción para uno o varios cliente potenciales cargando un archivo en formato CSV.")
 
 if 'file' not in st.session_state:

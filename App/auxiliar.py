@@ -21,7 +21,8 @@ def read_file(file):
 
 @st.cache_data
 def load_model():
-    path = './models/SVM.pkl'
+    # path = 'https://github.com/j2sanabriam/Proyecto_Final_ML/blob/64ff64b0098be2349e4b6ea9a66e11fc923cdac3/App/models/SVM.pkl'
+    path = 'models/SVM.pkl'
     with open(path, 'rb') as f:
         model = pickle.load(f)
     return model

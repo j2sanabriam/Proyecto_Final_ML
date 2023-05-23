@@ -1,10 +1,13 @@
 import streamlit as st
 import auxiliar as aux
+from PIL import Image
 
 
 st.set_page_config(page_title="SEMPLI App", layout="wide")
 
-st.image("img/sempli.png")
+img = Image.open('./img/sempli.png')
+st.image(img)
+# st.image("img/sempli.png")
 # st.title("Sempli App")
 st.write("Esta aplicación permite predecir si un cliente potencial de Sempli incorrirá en mora, para así apoyar la decisión de otorgarle un crédito o no. Puede realizar la predicción para uno o varios cliente potenciales cargando un archivo en formato CSV.")
 

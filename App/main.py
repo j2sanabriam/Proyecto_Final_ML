@@ -8,7 +8,7 @@ image_url = 'https://github.com/j2sanabriam/Proyecto_Final_ML/blob/main/App/img/
 st.image(image_url)
 # st.image("img/sempli.png")
 # st.title("Sempli App")
-st.write("Esta aplicación permite predecir si un cliente potencial de Sempli incorrirá en mora, para así apoyar la decisión de otorgarle un crédito o no. Puede realizar la predicción para uno o varios cliente potenciales cargando un archivo en formato CSV.")
+st.write("Esta aplicación permite predecir si clientes potenciales de Sempli incorrirá en mora, para así apoyar la decisión de otorgar o no tarjetas de crédito empresariales. Puede realizar la predicción para uno o varios cliente potenciales a través de un archivo en formato CSV.")
 
 if 'file' not in st.session_state:
     st.session_state['file'] = list()

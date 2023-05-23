@@ -4,10 +4,11 @@ import auxiliar as aux
 
 st.set_page_config(page_title="SEMPLI App", layout="wide")
 
-st.image("https://github.com/j2sanabriam/Proyecto_Final_ML/blob/main/App/img/sempli.png")
+# st.image("./img/sempli.png")
+st.title("Sempli App")
 st.write("Esta aplicación permite predecir si un cliente potencial de Sempli incorrirá en mora, para así apoyar la decisión de otorgarle un crédito o no. Puede realizar la predicción para uno o varios cliente potenciales cargando un archivo en formato CSV.")
 
-if 'images' not in st.session_state:
+if 'file' not in st.session_state:
     st.session_state['file'] = list()
     st.session_state['model'] = None
 
@@ -20,6 +21,7 @@ if not st.session_state['file']:
         st.subheader("Datos Cargados")
         df = aux.read_file(uploaded_file)
         st.write(df)
+        st.session_state['file'].append(df)
         # placeholder = st.empty()
 
         st.subheader("Datos Luego de Limpieza y Trasformación")
@@ -31,13 +33,25 @@ if not st.session_state['file']:
         df['moroso'] = y_pred
         st.write(df)
 
-        st.session_state['file'].append(df)
 
         # placeholder.empty()
         # st.experimental_rerun()
 
-        if st.button("Descargar Predicción"):
+        # if st.button("Descargar Predicción"):
+        csv = df.to_csv(index=False, sep=";").encode('utf-8')
+        filename = uploaded_file.name.split('.')[0] + "_predict.csv"
+        if st.download_button(
+            "Descargar Predicción",
+            csv,
+            filename,
+            "text/csv",
+            key='download-csv'
+        ):
             st.write("Archivo Descargando")
+
+            if st.button("Reiniciar"):
+                st.session_state['file'] = list()
+                st.experimental_rerun()
 
 else:
     if st.button("Reiniciar"):

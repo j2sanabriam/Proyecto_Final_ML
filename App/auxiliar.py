@@ -1,7 +1,5 @@
 import pandas as pd
 import streamlit as st
-import requests
-import joblib
 import pickle
 from sklearn.pipeline import Pipeline
 from sklearn.preprocessing import OneHotEncoder, StandardScaler, FunctionTransformer
@@ -21,60 +19,55 @@ def read_file(file):
     return df
 
 
-# @st.experimental_singleton()
 @st.cache_data
 def load_model():
     path = './models/SVM.pkl'
-    # modelo = pickle.load(path)
     with open(path, 'rb') as f:
         model = pickle.load(f)
     return model
-    """
-    try:
-        
-        url = 'https://github.com/j2sanabriam/Proyecto_Final_ML/blob/main/models/SVM.pkl'
-        print("Downloading from GitHub")
-        r = requests.get(url)
 
-        with open(path, 'wb') as file:
-            file.write(r.content)
 
-        print("Downloaded from GitHub")
-        
-        return joblib.load(path)
-    except:
-        return joblib.load(path)
-    """
+
+def eliminar_columnas_no_utiles(X):
+    columnas_no_utiles = ['contract_number', 'card_type', 'business_dni_type', 'city', 'mora_ultimos_6meses',
+                          'created_at']
+    return X.drop(columnas_no_utiles, axis=1)
 
 
 @st.cache_data
-def load_pipeline():
-    """
-    path = './models/pipeline_2.pkl'
-    with open(path, 'rb') as f:
-        pipe = pickle.load(f)
-    return pipe
-    """
-    path = './models/pipeline.pkl'
-    with open(path, 'rb') as f:
-        pipe = joblib.load(f)
-    return pipe
+def create_pipeline():
+    preprocessor = ColumnTransformer(
+        transformers=[
+            ("num", StandardScaler(), make_column_selector(dtype_include=np.number)),
+            ("cat", OneHotEncoder(), make_column_selector(dtype_include=object)),
+        ]
+    )
+    pipeline = Pipeline(steps=[
+        ('eliminar_columnas', FunctionTransformer(eliminar_columnas_no_utiles)),
+        ('column_transformer', preprocessor)
+    ])
 
-    """
-    try:
-        url = 'https://github.com/j2sanabriam/Proyecto_Final_ML/blob/main/models/pipeline.pkl'
-        print("Downloading from GitHub")
-        r = requests.get(url)
-
-        with open(path, 'wb') as file:
-            file.write(r.content)
-
-        print("Downloaded from GitHub")
-        return joblib.load(path)
-    except:
-        return joblib.load(path)
-    """
+    pipeline.fit(load_original_data())
+    return pipeline
 
 
+
+def transform (df):
+    pipeline = create_pipeline()
+
+    cat_names = pipeline['column_transformer'].transformers_[1][1].get_feature_names_out()
+    num_names = pipeline['column_transformer'].transformers_[0][1].feature_names_in_
+    col_names = list(num_names) + list(cat_names)
+
+    result = pipeline.transform(df)
+    datos = result.data
+    indices = result.indices
+    indptr = result.indptr
+
+    csr_matrix_data = csr_matrix((datos, indices, indptr), shape=(1711, 106))
+    df_p = pd.DataFrame(csr_matrix_data.toarray())
+    df_p.columns = col_names
+
+    return df_p
 
 

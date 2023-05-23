@@ -1,12 +1,17 @@
 import streamlit as st
 import auxiliar as aux
 from PIL import Image
+import pathlib
 
 
 
 st.set_page_config(page_title="SEMPLI App", layout="wide")
 
-img = Image.open('sempli.png')
+# path_image = pathlib.Path(f'/img/sempli.png')
+# img = Image.open(path_image)
+
+# img = Image.open('sempli.png')
+img = open("sempli.png", "rb")
 st.image(img)
 # st.image("img/sempli.png")
 # st.title("Sempli App")

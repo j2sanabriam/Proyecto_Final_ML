@@ -6,6 +6,7 @@ from sklearn.preprocessing import OneHotEncoder, StandardScaler, FunctionTransfo
 from sklearn.compose import ColumnTransformer, make_column_selector
 import numpy as np
 from scipy.sparse import csr_matrix
+import requests
 
 
 def load_original_data():
@@ -21,13 +22,25 @@ def read_file(file):
 
 @st.cache_data
 def load_model():
+
     # path = 'https://github.com/j2sanabriam/Proyecto_Final_ML/blob/64ff64b0098be2349e4b6ea9a66e11fc923cdac3/App/models/SVM.pkl'
     path = 'models/SVM.pkl'
     with open(path, 'rb') as f:
         model = pickle.load(f)
     return model
+    """
+    path = 'models/SVM.pkl'
 
+    url = 'https://github.com/j2sanabriam/Proyecto_Final_ML/blob/64ff64b0098be2349e4b6ea9a66e11fc923cdac3/App/models/SVM.pkl'
+    print("Downloading from GitHub")
+    r = requests.get(url)
 
+    with open(path, 'wb') as file:
+        file.write(r.content)
+
+    print("Downloaded from GitHub")
+    return pickle.load(path)
+    """
 
 def eliminar_columnas_no_utiles(X):
     columnas_no_utiles = ['contract_number', 'card_type', 'business_dni_type', 'city', 'mora_ultimos_6meses',

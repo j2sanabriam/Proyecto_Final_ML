@@ -11,7 +11,7 @@ st.set_page_config(page_title="SEMPLI App", layout="wide")
 # img = Image.open(path_image)
 
 # img = Image.open('sempli.png')
-image_url = 'https://github.com/j2sanabriam/Proyecto_Final_ML/blob/main/App/img/sempli.png'
+image_url = 'https://github.com/j2sanabriam/Proyecto_Final_ML/blob/main/App/img/sempli.png?raw=true'
 st.image(image_url)
 # st.image(img)
 # st.image("img/sempli.png")

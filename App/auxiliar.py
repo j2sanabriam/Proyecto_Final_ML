@@ -7,6 +7,7 @@ from sklearn.compose import ColumnTransformer, make_column_selector
 import numpy as np
 from scipy.sparse import csr_matrix
 import requests
+import io
 
 
 def load_original_data():
@@ -22,32 +23,28 @@ def read_file(file):
 
 @st.cache_data
 def load_model():
-    pkl_url = 'https://github.com/j2sanabriam/Proyecto_Final_ML/blob/64ff64b0098be2349e4b6ea9a66e11fc923cdac3/App/models/SVM.pkl'
-
-    # Descargar el archivo .pkl utilizando requests
-    response = requests.get(pkl_url)
-    model_bytes = response.content
-    model = pickle.loads(model_bytes)
-    return model
     """
-    # path = 'https://github.com/j2sanabriam/Proyecto_Final_ML/blob/64ff64b0098be2349e4b6ea9a66e11fc923cdac3/App/models/SVM.pkl'
+    # path = 'https://github.com/j2sanabriam/Proyecto_Final_ML/blob/64ff64b0098be2349e4b6ea9a66e11fc923cdac3/App/models/SVM.pkl?raw=true'
     path = 'models/SVM.pkl'
+
     with open(path, 'rb') as f:
         model = pickle.load(f)
     return model
+    """
+    path = 'models/SVM_2.pkl'
 
-    path = 'models/SVM.pkl'
-
-    url = 'https://github.com/j2sanabriam/Proyecto_Final_ML/blob/64ff64b0098be2349e4b6ea9a66e11fc923cdac3/App/models/SVM.pkl'
-    print("Downloading from GitHub")
+    url = 'https://github.com/j2sanabriam/Proyecto_Final_ML/blob/64ff64b0098be2349e4b6ea9a66e11fc923cdac3/App/models/SVM.pkl?raw=true'
     r = requests.get(url)
 
     with open(path, 'wb') as file:
         file.write(r.content)
 
-    print("Downloaded from GitHub")
-    return pickle.load(path)
-    """
+    with open(path, 'rb') as f:
+        model = pickle.load(f)
+
+    return model
+
+
 
 def eliminar_columnas_no_utiles(X):
     columnas_no_utiles = ['contract_number', 'card_type', 'business_dni_type', 'city', 'mora_ultimos_6meses',

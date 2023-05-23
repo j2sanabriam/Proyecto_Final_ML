@@ -7,7 +7,7 @@ from sklearn.compose import ColumnTransformer, make_column_selector
 import numpy as np
 from scipy.sparse import csr_matrix
 import requests
-import io
+
 
 
 def load_original_data():

@@ -25,14 +25,17 @@ if not st.session_state['file']:
         st.write(df)
         st.session_state['file'].append(df)
 
-        st.subheader("Datos Luego de Limpieza y Trasformación")
+        # st.subheader("Datos Luego de Limpieza y Trasformación")
         df_p = aux.transform(df)
-        st.write(df_p)
+        # st.write(df_p)
 
         st.subheader("Datos con Predicción")
         y_pred = st.session_state['model'].predict(df_p.values)
         df['prediccion_incurrira_mora'] = y_pred
         df['prediccion_incurrira_mora'] = df['prediccion_incurrira_mora'].replace([0, 1], ['No', 'Si'])
+
+        y_pred_proba = st.session_state['model'].predict_proba(df_p.values)
+        df = aux.add_numpy_to_dataframe(y_pred_proba, df)
         st.write(df)
 
         csv = df.to_csv(index=False, sep=";").encode('utf-8')

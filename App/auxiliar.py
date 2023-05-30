@@ -33,7 +33,7 @@ def load_model():
     """
     path = 'models/SVM_2.pkl'
 
-    url = 'https://github.com/j2sanabriam/Proyecto_Final_ML/blob/64ff64b0098be2349e4b6ea9a66e11fc923cdac3/App/models/SVM.pkl?raw=true'
+    url = 'https://github.com/j2sanabriam/Proyecto_Final_ML/blob/a8ebbd81380d55e40b1d894e06d4a73b5fae3349/App/models/SVM.pkl?raw=true'
     r = requests.get(url)
 
     with open(path, 'wb') as file:
@@ -88,4 +88,8 @@ def transform (df):
 
     return df_p
 
+def add_numpy_to_dataframe(array , df):
+    df2 = pd.DataFrame(array, columns=['probabilidad_No', 'probabilidad_Si'])
+    df = pd.concat([df, df2], axis=1)
+    return df
 
